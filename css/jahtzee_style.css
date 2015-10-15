@@ -1,0 +1,272 @@
+body{
+	background-image: url("../images/footer_lodyas.png");
+	height:100%;
+	font-family: 'Open Sans Condensed', sans-serif;
+	margin:0;
+	overflow-x:hidden;
+	width:100%;
+}
+
+/*#content{
+	position:relative;
+}*/
+
+.dice{
+	cursor: pointer;
+	height:75px;
+	width:79px;
+	background-color:#fff;
+	border:8px solid rgba(255,255,255,0);
+	background-clip:padding-box;
+	margin:7px;
+	display:inline-block;
+	border-radius:5px;
+}
+
+#diceContainer{
+	margin:2%;
+	margin-left: 15%;
+}
+
+#extras_container{
+	bottom:130px;
+	display: inline-block;
+	height:200px;
+	left:1400px;
+	position:absolute;
+	transition:left 0.5s;
+	width:100px;
+	z-index:2;
+}
+
+#extras_container.moved{
+	left:1200px;
+	transition:0.5s;
+}
+
+.held{
+	background-color: #78BDBB;
+	border:8px solid #3C6E6C;
+	margin:7px;
+}
+
+header{
+	background-color: #B2C0ED;
+	box-shadow:0px 2px 5px #525252;
+	margin:0 auto;
+	margin-top:30px;
+	padding:0.75%;
+	position:relative;
+	text-align:center;
+	width:25%;
+}
+
+header:before{
+	content:"";
+	background:#111;
+	bottom:15px;
+	box-shadow:0 15px 10px #333;
+	left:10px;
+	max-width:300px;
+	position:absolute;
+	top:80%;
+	transform:rotate(-5deg);
+	width:35%;	
+	z-index:-1;
+}
+
+.hidden{
+	display:none !important; 
+}
+
+html{
+	height:100%;
+	width:100%;
+}
+
+
+img{
+	max-width:100%;
+	max-height:100%;
+}
+
+#instructions_button{
+	color: white;
+	position:absolute;
+	right:2%;
+	top:43%;
+
+}
+
+#main_container{
+	background-color: #B2C0ED;
+	background-clip:padding-box;
+	border:50px solid rgba(59, 77, 152, 0.5);
+	display:inline-block;
+	margin-bottom: 10%;
+	margin-top:20px;
+	position:relative;
+	width:800px;
+}
+
+
+.main_button{
+	background-color: #3C5193;
+	box-shadow:2px 2px 2px #383838;
+	color:#E8D1B7;
+	display:inline-block;
+	font-size: 1.5em;
+	height:50px;
+	left:20%;
+	margin:auto;
+	padding-top: 4%;
+	position:relative;
+	text-align:center;
+	width:90px;
+	z-index:2;	
+}
+
+.main_button:hover{
+	background-color: #334479;
+	cursor:pointer;
+}
+
+#rollButton:active{
+	background-color: #233057;
+	color:#FFF;
+	top:1px;
+}
+
+
+table{
+	background-color:#fff;
+	border:0.2em solid #3C5193;
+	display: inline-block;
+	margin-bottom: 6%;
+	margin-top:6%;
+}
+
+table.left{
+	margin-left:16%;
+	margin-right:5%;
+}
+
+table.right{
+	margin-left:5%;
+	margin-right: 16%;
+}
+
+
+td{
+	border:0.1em solid #3C5193;
+	text-align:center;
+}
+
+/*.category{
+	cursor:pointer;
+}*/
+
+.category.active:hover{
+	background-color:#00665E;
+	color:#fff;
+	cursor:pointer;
+}
+
+
+th{
+	border:0.15em solid #3C5193;
+	background-color:#78BDBB;
+}
+
+.highlighted {
+	background-color:#a32;
+}
+
+/*.home_button{
+	height:50px;
+	left:70px;
+	position:absolute;
+	top:30px;
+	width:50px;
+}*/
+
+#filter{
+	background-color:#000;
+	height:100%;
+	width:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	opacity:0.75;
+	z-index:1;
+	transition:opacity 0.75;
+}
+
+
+
+
+#rollCounter{
+	width:50px;
+	height:50px;
+	background-color:#000;
+	opacity:0.8;
+	border-radius:50%;
+	display:inline-block;
+	position:relative;
+	left:20%;
+	margin-bottom: -4%;
+	margin-left:3%;
+	color:white;
+	text-align:center;
+	overflow:hidden;
+	font-size:2em;
+}
+
+
+
+#rollContainer{
+	width:50%;
+/*	height:10%;*/
+	margin:auto;
+	position:relative;
+}
+
+
+
+#instructions_container{
+	background-color: #3C5193;
+	box-shadow: 2px 5px 5px #333;
+	display:inline-block;
+	left:0;
+	margin-left:-435px;
+	margin-right:18%;
+	position: relative;
+	top:-45px;
+	transition:1s;
+	width:500px;
+}
+
+#instructions_container:hover:not(.expanded){
+	background-color: #24366E;
+	left:10px;
+	transition:0.2s;
+}
+
+#instructions_container.expanded{
+	margin-left: 0;
+	margin-right:5%;
+	transition:1s;
+}
+
+
+#instructions_inner{
+	width:80%;
+	margin:2%;
+	padding:2%;
+	background-color:#B2C0ED;
+	display:inline-block;
+}
+
+
+/*Ask Hackett why rollCounter won't use a percentage for top but has percentage for left. Follow up to parent element? Maybe no height defined?*/ 
+/*Ask Hackett why doesnt just push container over, but goes under instead but when width changes it pushes */
