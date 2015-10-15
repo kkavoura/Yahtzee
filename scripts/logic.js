@@ -1,8 +1,14 @@
 
   //**********************************************************************//
- // OBJECT CONSTRUCTORS                                                  //
+ //                           CONSTRUCTORS                               //
 //**********************************************************************//
 
+/**
+ * @typedef Dice
+ * @type {Object}
+ * @property {Number} value - value of the die
+ * @property {Boolean} held - whether it is being held
+ */
 function Dice(){
 	if(!(this instanceof Dice)) {
 		return new Dice();
@@ -28,11 +34,15 @@ function Dice(){
 
 }
 
-
+/**
+ * @typedef Category
+ * @type {Object}
+ * @property {Number} currentScore - current Score for this Category
+ * @property {Boolean} scored - indicates if Category is scored
+ */
 
 function Category(){
-	var description = "",
-		currentScore = 0,
+	var currentScore = 0,
 		scored = false;	
 	
 	this.getScore = function(){
@@ -46,20 +56,17 @@ function Category(){
 		console.log("Score was set to ", newScore);
 	}
 	
-	this.setDescription = function(description_text){
-		description = description_text;
-	}
-	
-	this.getDescription = function(){
-		return description;
-	}
-	
 	this.isAlreadyScored = function(){
 		return scored;
 	}
 
 }
-
+/**
+ * @typedef Game
+ * @type {Object}
+ * @property {Boolean} isOver - is game finished
+ * @property {Number} finalScore - final score
+ */
 function Game(){
 	var isOver= false,
 		finalScore = 0;
@@ -257,10 +264,7 @@ function enterScore(category, score){
 		alert("You have finished the game!");
 		alert("Your final score is " + getFinalScore());
 	}
-
 	return true;
-
-
 }
 
 
@@ -327,48 +331,9 @@ function checkFullHouse(){
 
 
 /**
- * Returns a boolean corresponding to whether or not a Small Straight has been achieved. (4 numbers in a row)
+ * Checks if has been achieved (5 of the same number).
+ * @returns {Boolean} Boolean corresponding to whether or not Yahtzee was achieved
  */
-function checkSmallStraight(){
-	var diceValues  = [];
-	for(var i=0; i<diceArray.length; i++){
-		diceValues[i]=diceArray[i].getValue();
-	}
-	diceValues.sort()
-	for ( var i = 1; i < diceValues.length; i++ ) {
-  	  if ( diceValues[i] === diceValues[ i - 1 ] ) {
-     	   diceValues.splice( i--, 1 );
-     }
-	}
-	console.log(diceValues);
-	var uniques ="";
-	for(var i=0; i<diceValues.length; i++){
-		uniques = uniques + String(diceValues[i]);
-	}
-	console.log(uniques);
-	if(uniques==="1234" | uniques==="2345" | uniques==="3456"){
-		return true;
-	}
-	return false;
-}
-
-
-/**
- * Returns a boolean corresponding to whether or not a Large Straight has been achieved (5 numbers in a row).
- * 
- */
-function checkLargeStraight(){
-	if(checkSmallStraight){
-		if((occurs(1)>0 && occurs(5)>0) || (occurs(2)>0 && occurs(6)>0)){
-			return true;
-		}
-	}
-	return false;
-	
-}
-
-
-//Returns a boolean corresponding to whether or not Yahtzee has been achieved (5 of the same number).
 function checkYahtzee(){
 	for(var i=0; i<diceArray.length; i++){
 		if(occurs(i+1)===5){
@@ -379,8 +344,10 @@ function checkYahtzee(){
 }
 
 
-//Checks to see if there are any categories left to score. If there are categories that have not already
-//been scored, returns false.
+/**
+ * Checks to see if there are any categories left to score. 
+ * @returns {Boolean} Boolean indicating whether all categories have been scored
+ */
 function checkCompletion(){
 
 	for(var i=0; i<categoryArray.length-2; i++){
@@ -391,7 +358,10 @@ function checkCompletion(){
 	return true;
 }
 
-//Gets the subtotal from the categories in the top half(1-6)
+/**
+ * Gets the subtotal from the categories in the top half (1-6)
+ * @returns {Number} score for numerical categories (before potential bonus)
+ */
 function getSubtotal(){
 	var subtotal = 0;
 	for(var i=0; i<6; i++){
@@ -401,8 +371,10 @@ function getSubtotal(){
 }
 
 
-//Checks the subtotal in the first categories and if is is over 63
-//it adds another 35 points to the total score.
+/**
+ * Checks the subtotal in the first categories and if is is over 63
+ * it adds another 35 points to the total score.
+ */
 function setBonus(){
 	bonus.setScore(0);
 	if(getSubtotal()>=63){
@@ -410,7 +382,10 @@ function setBonus(){
 	}
 }
 
-//Calculates the total final score of the game
+/**
+ * Calculates the total final score of the game
+ * @returns {Number} final score
+ */
 getFinalScore = function(){
 	var sum=0;
 	setBonus();
@@ -420,11 +395,12 @@ getFinalScore = function(){
 	return sum;
 }
 
-
-//Checks for a straight of a certain length (4 for small, 5 for large)
-//Sorts values, removes duplicates and checks for desired straight
-//IN: length of straight(int)
-//OUT: bool indicating if it was achieved or not
+/**
+ * Checks for a straight of a certain length (4 for small, 5 for large)
+ * Sorts values, removes duplicates and checks for desired straight
+ * @param {Number} length of straight(int)
+ * @returns {Boolean} bool indicating if it was achieved or not
+*/
 function checkForStraight(length){
 	var length = length,
 		diceValues = []
@@ -457,8 +433,9 @@ function checkForStraight(length){
 }
 
 
-
-///Sets the roll to a yahtzee roll, used for debugging
+/**
+ * Sets the roll to a yahtzee roll, used for debugging
+ */
 function setYahtzee(){
 	var diceValues = [];
 
@@ -469,76 +446,34 @@ function setYahtzee(){
 	console.log(diceValues);
 }
 
-
-  //**********************************************************************//
- //							RUNTIME                                      //
-//**********************************************************************// 
 function newGame(){
 
-	console.log("NEW GAME");
-
-
-
-		die1 = new Dice(),
-		die2 = new Dice(),
-		die3 = new Dice(),
-		die4 = new Dice(),
-		die5 = new Dice(),
-		ones = new Category(),
-		twos = new Category(),
-		threes = new Category(),
-		fours = new Category(),
-		fives = new Category(),
-		sixes = new Category(),
-		subtotal = new Category(),
-		bonus = new Category(),
-		threeKind = new Category(),
-		fourKind = new Category(),
-		fullHouse = new Category(),
-		smallStraight = new Category(),
-		largeStraight = new Category(),
-		yahtzee = new Category(),
-		yahtzeeBonus = new Category(),
-		chance = new Category(),
-		grandTotal = new Category();
+	die1 = new Dice(),
+	die2 = new Dice(),
+	die3 = new Dice(),
+	die4 = new Dice(),
+	die5 = new Dice(),
+	ones = new Category(),
+	twos = new Category(),
+	threes = new Category(),
+	fours = new Category(),
+	fives = new Category(),
+	sixes = new Category(),
+	subtotal = new Category(),
+	bonus = new Category(),
+	threeKind = new Category(),
+	fourKind = new Category(),
+	fullHouse = new Category(),
+	smallStraight = new Category(),
+	largeStraight = new Category(),
+	yahtzee = new Category(),
+	yahtzeeBonus = new Category(),
+	chance = new Category(),
+	grandTotal = new Category();
 		
-	 diceArray = [die1, die2, die3, die4, die5];
-	 categoryArray = [ones,twos,threes,fours,fives,sixes,threeKind,fourKind,fullHouse,smallStraight,largeStraight,yahtzee,chance,yahtzeeBonus, bonus];
-	 rollCounter = 0;	
-	 console.log("rollcounter", rollCounter);
-	 justScored = false;
+	diceArray = [die1, die2, die3, die4, die5];
+	categoryArray = [ones,twos,threes,fours,fives,sixes,threeKind,fourKind,fullHouse,smallStraight,largeStraight,yahtzee,chance,yahtzeeBonus, bonus];
+	rollCounter = 0;	
+	console.log("rollcounter", rollCounter);
+	justScored = false;
 }
-
-
-
-
-//	heldArray = [die1.is]
-	
-	// //Prints out the current roll
-	// for (var i=0; i<diceArray.length; i++){
-	// 	//console.log(diceArray[i].getValue());
-	// 	console.dir(diceArray[i]);
-	// }
-	
-		
-	
-	// ones.setDescription("The sum of all the dice with the value 1.");
-	// twos.setDescription("The sum of all the dice with the value 2.");
-	// threes.setDescription("The sum of all the dice with the value 3.");
-	// fours.setDescription("The sum of all the dice with the value 4.");
-	// fives.setDescription("The sum of all the dice with the value 5.");
-	// sixes.setDescription("The sum of all the dice with the valie 6.");
-	// subtotal.setDescription("The sum of all the scores 1-6.");
-	// bonus.setDescription("If the subtotal is over than 65, an extra 35 points are added here.");
-	// threeKind.setDescription("Add the total of all the dice.");
-	// fourKind.setDescription("Add the total of all the dice.");
-	// fullHouse.setDescription("25 points.");
-	// smallStraight.setDescription("30 points.");
-	// largeStraight.setDescription("40 points.");
-	// yahtzee.setDescription("50 points.");
-	// chance.setDescription("Add the total of all the dice.");
-	// yahtzeeBonus.setDescription("For every aditional Yahtzee scored, add 100 points.");
-	// grandTotal.setDescription("The total of all the categories.");
-	
-//Consider changing checkCompletion to take an argument for up to where to check
-//Why is yahtzee bonus score not showing? may be ui

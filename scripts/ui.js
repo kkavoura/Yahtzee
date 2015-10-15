@@ -96,110 +96,108 @@ run = function(){
 		
 	/****************************************************************!!***************************************************************/
 
-	$(".fa-bars").on("click", function(){
-		$menu.toggleClass("expanded");
-	});
+		$(".fa-bars").on("click", function(){
+			$menu.toggleClass("expanded");
+		});
 
-	$(".fa-times-circle").on("click", function(){
-		$instructions_container.toggleClass("expanded");
-	})
+		$(".fa-times-circle").on("click", function(){
+			$instructions_container.toggleClass("expanded");
+		})
 
-	$("#instructions_button").on("click", function(){
-		// $instructions_container.toggleClass("expanded");
-		$menu.toggleClass("expanded");
-	});
+		$("#instructions_button").on("click", function(){
+			$menu.toggleClass("expanded");
+		});
 
-	// Bring up scoring selection menu that scrolls you to appropriate category scoreboard
-	$("#score_button").on("click", function(){
-		$score_selection.toggleClass("hidden");
-	});
+		// Bring up scoring selection menu that scrolls you to appropriate category scoreboard
+		$("#score_button").on("click", function(){
+			$score_selection.toggleClass("hidden");
+		});
 
-	$("#score_selection_numbers").on("click", function(e){
-		e.stopPropagation();
-		$("html, body").animate({
-			scrollTop: $(".left").offset().top
-		}, 500);
-		$score_selection.toggleClass("hidden");
-	});
+		$("#score_selection_numbers").on("click", function(e){
+			e.stopPropagation();
+			$("html, body").animate({
+				scrollTop: $(".left").offset().top
+			}, 500);
+			$score_selection.toggleClass("hidden");
+		});
 
-	$("#score_selection_combos").on("click", function(e){
-		e.stopPropagation();
-		$("html, body").animate({
-			scrollTop: $(".right").offset().top
-		}, 500);
-		$score_selection.toggleClass("hidden");
-	});
-
+		$("#score_selection_combos").on("click", function(e){
+			e.stopPropagation();
+			$("html, body").animate({
+				scrollTop: $(".right").offset().top
+			}, 500);
+			$score_selection.toggleClass("hidden");
+		});
 
 
-//Changes the images on the dice to match the current values
-//IN: --
-//OUT:--
-changeImage = function(){
-	for(var i=0; i<5; i++){
-		$(".dice:nth-child("+ (i+1) +")")
-			.children("img")
-			.attr("src","images/d" + diceArray[i].getValue() + ".png");
-	}
-}
 
-//Changes the images on non-held dice randomly to make them appear animated
-//IN:--
-//OUT:--
-function randomizeImages(cb){
-	var randomNumber = 0,
-		randCounter = 0;
-
-	var randImg = setInterval(function(){
-		$dice.not(".held")
-			.each(function(index, el){
-				var randomNumber = Math.ceil(Math.random()*6);
-				$(this)
+		/** Changes the images on the dice to match the current values */
+		changeImage = function(){
+			for(var i=0; i<5; i++){
+				$(".dice:nth-child("+ (i+1) +")")
 					.children("img")
-					.attr("src", "images/d"+randomNumber+".png");
-			});
-		randCounter++;
-		if(randCounter===5){
-			clearInterval(randImg);
-			cb();
-		}	
-	}, 150);
+					.attr("src","images/d" + diceArray[i].getValue() + ".png");
+			}
+		}
 
+		/** Changes the images on non-held dice randomly to make them appear animated */
+		function randomizeImages(cb){
+			var randomNumber = 0,
+				randCounter = 0;
+
+			var randImg = setInterval(function(){
+				$dice.not(".held")
+					.each(function(index, el){
+						var randomNumber = Math.ceil(Math.random()*6);
+						$(this)
+							.children("img")
+							.attr("src", "images/d"+randomNumber+".png");
+					});
+				randCounter++;
+				if(randCounter===5){
+					clearInterval(randImg);
+					cb();
+				}	
+			}, 150);
+		}
+
+		/**
+		 * Returns the die object corresponding to which one was clicked
+		 * @param {String} string indicating the id of the clicked die
+		 * @returns {Dice} the die which was clicked
+		 */ 
+		ui_id_to_logic = function(diceID){
+			switch(diceID){
+				case "i":
+					return die1;
+					break;
+				case "ii":
+					return die2;
+					break;
+				case "iii":
+					return die3;
+					break;
+				case "iv":
+					return die4;
+					break;
+				case "v":
+					return die5;
+					break;
+			}
+		}
+
+		/**
+		 * Edits the UI when a new game is started
+		 * Resets dice to default value, removes all held animations, clears scoreboard
+		 */
+		function resetUI(){
+			$dice.removeClass("held");
+			changeImage();
+			$score
+				.text("")
+				.removeClass("scored");
+		}
+	});
 }
-
-
-//Takes the id of a certain die from the user interface and returns the corresponding Dice object from the logic.js file 
-ui_id_to_logic = function(diceID){
-	switch(diceID){
-		case "i":
-			return die1;
-			break;
-		case "ii":
-			return die2;
-			break;
-		case "iii":
-			return die3;
-			break;
-		case "iv":
-			return die4;
-			break;
-		case "v":
-			return die5;
-			break;
-	}
-}
-
-//Edits the UI when a new game is started
-//Resets dice to default value, removes all held animations, clears scoreboard
-//IN:-
-//OUT:-
-function resetUI(){
-	$dice.removeClass("held");
-	changeImage();
-	$score
-		.text("")
-		.removeClass("scored");
-}
-});}
 
 addLoadEvent(run);
