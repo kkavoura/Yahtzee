@@ -17,13 +17,18 @@
 	</header>
 		<div id="menu">
 			<a href="#modal">
-				<div id="instructions_button" class="button-menu">
+				<div id="instructions_button" class="menu-button">
 					<i class="fa fa-info-circle fa-2x"></i>
 				</div>
 			</a>	
-			<div id="new_game_button" class="button-menu">
+			<div id="new_game_button" class="menu-button">
 				<span>New Game</span>
 			</div>
+			<a href="#modal_scoreboard">
+				<div class="menu-button">
+					<span>High Scores</span>
+				</div>
+			</a>
 		</div>
 
 		<div class="remodal" data-remodal-id="modal">
@@ -58,6 +63,17 @@
 				</div>
 				<br>
 				<button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+		</div>
+
+		<div class="remodal" data-remodal-id="modal_scoreboard">
+			<button data-remodel-action="close" class="remodal-close"></button>
+			<h2>High Scores</h2>
+			<table id="highscores_table">
+				<tr>
+					<th>Name</th>
+					<th>Score</th>
+				</tr>
+			</table>
 		</div>
 
 		<div id="main_container">

@@ -23,7 +23,7 @@ body {
   height: 100px;
   width: 100%; }
 
-.category, .button, .button-menu, .dice, .fa-bars, .fa-times-circle {
+.category, .button, .menu-button, .dice, .fa-bars, .fa-times-circle {
   cursor: pointer; }
 
 .dice {
@@ -99,15 +99,14 @@ img {
   left: 0;
   transition: left 0.5s; }
 
-.button-menu {
+.menu-button {
   background-color: #0097A7;
   border: 2px solid #00BCD4;
   box-sizing: border-box;
   color: #B2EBF2;
   float: left;
   height: 50px;
-  margin: 15px 0 0 10%;
-  width: 35%; }
+  width: 100%; }
 
 #main_container {
   background-color: #333;
@@ -116,11 +115,11 @@ img {
 #menu {
   background-color: #B2EBF2;
   box-shadow: 2px 2px #00BCD4;
-  height: 90px;
+  height: 150px;
   overflow: hidden;
   position: absolute;
   text-align: center;
-  top: 0;
+  top: -150px;
   left: 0;
   transition: top 0.5s;
   width: 100%;
@@ -207,10 +206,6 @@ th, td {
   .button {
     width: 75%; }
 
-  .button-menu {
-    margin-left: 20%;
-    width: 20%; }
-
   #buttonContainer {
     float: left;
     padding-top: 11vw;
@@ -243,10 +238,6 @@ th, td {
     background-image: url("../images/footer_lodyas.png");
     overflow: auto; }
 
-  .button-menu {
-    margin: 15px 0 0 27%;
-    width: 45%; }
-
   #buttonContainer {
     float: left;
     margin-top: 11vw;
@@ -272,6 +263,9 @@ th, td {
     margin-left: 20vw;
     width: 45vw; }
 
+  #instructions_button {
+    padding-top: 0; }
+
   #instructions_container {
     width: 45%; }
 
@@ -282,10 +276,13 @@ th, td {
 
   #menu {
     box-shadow: none;
-    height: 150px;
+    height: auto;
     left: 81vw;
     top: -50px;
     width: 18vw; }
+
+  .menu-button:hover {
+    background-color: #176E77; }
 
   img {
     height: 8vw;

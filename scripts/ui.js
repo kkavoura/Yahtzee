@@ -100,10 +100,6 @@ run = function(){
 			$menu.toggleClass("expanded");
 		});
 
-		$(".fa-times-circle").on("click", function(){
-			$instructions_container.toggleClass("expanded");
-		})
-
 		$("#instructions_button").on("click", function(){
 			$menu.toggleClass("expanded");
 		});
