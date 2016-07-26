@@ -81,6 +81,22 @@ header {
 .hidden {
   display: none !important; }
 
+.highScores-navigation-button {
+  background-color: #00BCD4;
+  bottom: 2%;
+  color: white;
+  height: 25px;
+  position: absolute;
+  width: 50px; }
+  .highScores-navigation-button:hover {
+    background-color: #76F9A9;
+    color: #00BCD4;
+    cursor: pointer; }
+  .highScores-navigation-button:first-of-type {
+    left: 4%; }
+  .highScores-navigation-button:nth-of-type(2) {
+    right: 4%; }
+
 img {
   height: 27vw;
   width: 27vw; }

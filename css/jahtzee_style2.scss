@@ -108,6 +108,31 @@ header{
 	display:none!important;
 }
 
+.highScores-navigation-button{
+	background-color:$main-color;
+	bottom:2%;
+	color:white;
+	height:25px;
+	position:absolute;
+	width:50px;
+
+	&:hover{
+		background-color:$accent;
+		color:$main-color;
+		cursor:pointer;
+	}
+
+	&:first-of-type{
+		left:4%;
+	}
+
+	&:nth-of-type(2){
+		right:4%;
+	}
+}
+
+
+
 img{
 	height:27vw;
 	width:27vw;

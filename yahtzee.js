@@ -51,7 +51,8 @@ app.get('/highScores', function(req, res){
         if(err){
             throw err;
         }
-        res.render('highScores', {users: users});
+        // res.render('highScores', {users: users});
+        res.json(users);
     });
 
 });

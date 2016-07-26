@@ -13,7 +13,13 @@ run = function(){
 			$score = $(".score"),
 			$window = $(window),
 			$menu = $("#menu"),
-			$score_selection = $("#score_selection");
+			$score_selection = $("#score_selection"),
+			currentHighScoresPage = 0,
+			highScoresData = [],
+			highScoresPerPage = 5,
+			hsNavButtonPrev = $('.highScores-navigation-button:first-of-type'),
+			hsNavButtonNext = $('.highScores-navigation-button:nth-of-type(2)'),
+			maxNumberOfHighScoreTablePages = 0;
 		
 		//Rolling and animating dice roll
 		$rollButton.click(function(){
@@ -126,9 +132,33 @@ run = function(){
 		});
 
 		$('#highScores_button').on('click', function(){
+			currentHighScoresPage = 0;
 			$.get('/highScores', function(data){
-				$('#highScores_table').html(data);
+				hsNavButtonPrev.addClass('hidden');
+				hsNavButtonNext.removeClass('hidden');
+				highScoresData = data;
+				maxNumberOfHighScoreTablePages = Math.ceil(
+					highScoresData.length/highScoresPerPage);
+				paginateData(currentHighScoresPage, highScoresData);
 			});
+		});
+
+		hsNavButtonNext.on('click', function(){
+			hsNavButtonPrev.removeClass('hidden');
+			currentHighScoresPage+=1;
+			if(currentHighScoresPage == maxNumberOfHighScoreTablePages-1){
+				hsNavButtonNext.addClass('hidden');
+			}
+			paginateData(currentHighScoresPage, highScoresData);
+		});
+
+		hsNavButtonPrev.on('click', function(){
+			hsNavButtonNext.removeClass('hidden');
+			currentHighScoresPage-=1;
+			if(currentHighScoresPage==0){
+				hsNavButtonPrev.addClass('hidden');
+			}
+			paginateData(currentHighScoresPage, highScoresData);
 		});
 
 
@@ -199,6 +229,44 @@ run = function(){
 				.text("")
 				.removeClass("scored");
 		}
+
+		/**
+		 * Retrieves the appropriate data based on the current page number
+		 * @param {Number} Integer specifying the current page 
+		 * @param {Array} Full data to be parsed
+		 * @returns {Array} Array containing objects with the relevant data for the 
+		 *  corresponding page
+		 */
+		function paginateData(pageNumber, data){
+			var currNum = pageNumber*highScoresPerPage,
+				newData = [];
+
+			for(var x=currNum; x<currNum+highScoresPerPage; x++){
+				if(data[x]){
+					console.log(data[x]);
+					newData.push(data[x]);
+				}
+			}
+
+			displayHighScores(newData);
+			return newData;
+		}
+
+		/**
+		 * Displays the relevant data in the High Scores Table
+		 * @param {Array} Array of objects containing data to be displayed
+		 */
+		 function displayHighScores(data){
+		 	var dataString ='';
+		 	console.log(data.length);
+		 	for(var x=0; x<data.length; x++){
+		 		dataString+= '<tr><td>' + data[x].name + '</td><td>' + data[x].score +
+		 			'</td></tr>' 
+		 	}
+		 	console.log(dataString);
+		 	$('#highScores_table').children('tbody').html(dataString);
+		 }
+
 	});
 }();
 
@@ -214,3 +282,5 @@ function getPlayerName(){
 	// 	return playerName;
 	// }
 }
+
+
