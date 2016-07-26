@@ -1,0 +1,196 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> Javascript Yahtzee!</title>
+        <link rel="stylesheet" type="text/css" href="css/jahtzee_style2.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/remodal/dist/remodal.css">
+        <link rel="stylesheet" href="bower_components/remodal/dist/remodal-default-theme.css">
+    </head>
+<body>
+    <header>
+        <h1>Yahtzee!</h1>
+        <i class="fa fa-bars fa-2x"></i>
+    </header>
+
+        <div id="menu">
+            <a href="#modal">
+                <div id="instructions_button" class="menu-button">
+                    <i class="fa fa-info-circle fa-2x"></i>
+                </div>
+            </a>    
+            <div id="new_game_button" class="menu-button">
+                <span>New Game</span>
+            </div>
+            <a href="#modal_scoreboard">
+                <div class="menu-button" id="highScores_button">
+                    <span>High Scores</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="remodal" data-remodal-id="modal">
+            <button data-remodal-action="close" class="remodal-close"></button>
+            <h2>Instructions</h2>
+                <div>
+                    <div>Yahtzee involves rolling a total of 5 dice and scoring certain categories
+                    based on the outcome of those rolls. In one turn you can roll up to 3 times, 
+                    and after each roll you can choose to hold a certain number of dice and not
+                    roll them in order to increase your chances of scoring a certain combination
+                    by the end of the turn. After each turn a category MUST be scored, even if 
+                    a combination has not occured, so 0 may have to be entered somewhere instead.<br/><br/>
+                    
+                        There are 2 sections of categories, numerical and combinations. The numerical
+                    categories are simply the numbers on the dice, and are generally scored when
+                    no combination has occured. Therefore these are:Ones, Twos, Threes, Fours,
+                    Fives and Sixes. The score entered in these is the sum of the numbers in the 
+                    corresponding category. (For example if you rolled 1,4,3,3,1 and choose to score
+                    your Threes category, the score entered there would be 6.) If by the end the 
+                    total of all these categories exceeds 63, an extra 35 points are added!<br/><br/>
+                    
+                       The second part consists of the combination categories. These include:
+                      <ul>
+                        <li>3 of a kind (sum of all dice)   </li>                                       
+                        <li>4 of a kind (sum of all dice)   </li>                                   
+                        <li>Full House - two of a kind and three of another (25 pts) </li>
+                        <li>Small Straight - 4 sequential numbers (30 pts) </li>    
+                        <li>Large straight - 5 sequential numbers (40 pts)  </li>               
+                        <li>Yahtzee - 5 of a kind (50 pts for 1st, 100pts for each subsequent yahtzee)  </li>
+                      </ul>
+                    </div>
+                </div>
+                <br>
+                <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+        </div>
+
+
+        <div class="remodal" data-remodal-id="modal_scoreboard">
+            <button data-remodal-action="close" class="remodal-close"></button>
+            <h2>High Scores</h2>
+            <table id="highScores_table"></table>
+        </div>
+
+
+        <div id="main_container">
+                <div id="filter"></div>
+            <div id="diceContainer">
+                <div class="dice" id='i'><img src="images/d2.png"></div>
+                <div class="dice" id='ii'><img src="images/d2.png"></div>
+                <div class="dice" id='iii'><img src="images/d2.png"></div>
+                <div class="dice" id='iv'><img src="images/d2.png"></div>
+                <div class="dice" id='v'><img src="images/d2.png"></div>
+            </div>
+            <div id="buttonContainer">
+                <div id="rollButton" class="button hidden">
+                    <div class="roll-counter-indicator hidden"></div>
+                    <div class="roll-counter-indicator hidden"></div>
+                    <div class="roll-counter-indicator hidden"></div>
+                    Roll
+                </div>
+                <div id="score_button" class="button">Score
+                    <div id="score_selection" class="hidden">
+                        <div id="score_selection_numbers" class="score-selection-category">Numbers</div>
+                        <div id="score_selection_combos" class="score-selection-category">Combos</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="scoreBoardContainer">
+                <table class="left">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Points Scored</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category" id="0">1s</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" id="1">2s</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" id="2">3s</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td class="category active" id="3">4s</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" id="4">5s</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td class="category" id="5">6s</td>
+                            <td class="score"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td id="subtotal">Subtotal:</td>
+                            <td class="score"></td>
+                        </tr>
+                        <tr>
+                            <td id="bonus">Bonus:</td>
+                            <td class="score"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table class="right">
+                    <tr>
+                        <th>Category</th>
+                        <th>Points Scored</th>
+                    </tr>
+                    <tr>
+                        <td class="category" id="6">3 of a kind</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="7">4 of a kind</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="8">Full House</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="9">Small Straight</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="10">Large Straight</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="11">Yahtzee</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td class="category" id="12">Chance</td>
+                        <td class="score"></td>
+                    </tr>
+                    <tr>
+                        <td  id="13">Yahtzee Bonus</td>
+                        <td class="score"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="extras_container" class="hidden">
+            <div id="new_game_button"></div>
+        </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="bower_components/remodal/dist/remodal.js"></script>
+    <script src="scripts/logic.js"></script>
+    <script src="scripts/ui.js"></script>
+<!--    <script type="text/javascript" src="./yahtzee.js"></script> -->
+</body>
+</html>

@@ -261,6 +261,9 @@ function enterScore(category, score){
 	rollCounter=0;
 
 	if(checkCompletion()){
+		console.log("Game complete, calling GETPLAYERNAMEANDSCORE");
+		var playerNameAndScore = getPlayerNameAndScore();
+		sendEndgameInfo(playerNameAndScore);
 		alert("You have finished the game!");
 		alert("Your final score is " + getFinalScore());
 	}
@@ -435,6 +438,7 @@ function checkForStraight(length){
 
 /**
  * Sets the roll to a yahtzee roll, used for debugging
+ * @returns {Object} object with player name and info
  */
 function setYahtzee(){
 	var diceValues = [];
@@ -445,6 +449,32 @@ function setYahtzee(){
 	}
 	console.log(diceValues);
 }
+
+/**
+ * Gets player input for name and creates object with that and final score
+ * @returns {Object} Object with {name: String, score: Number}
+ */
+ function getPlayerNameAndScore(){
+ 	var playerName = getPlayerName(),
+ 		finalScore = getFinalScore(),
+ 		gameInfo = {
+ 			name: playerName,
+ 			score: finalScore
+ 		}
+ 		if( !(playerName && finalScore) ) {
+ 			console.log("An error occurred. Please make sure player name and" +
+ 				" final score are entered properly.");
+ 			return;
+ 		}
+ 	return gameInfo;
+ }
+
+ /**
+  * Sends endgame information (object with name and score) to server
+  */
+  function sendEndgameInfo(gameInfo){
+  	$.post('http://localhost:3000', gameInfo);
+  }
 
 function newGame(){
 

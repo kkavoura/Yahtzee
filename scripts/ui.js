@@ -125,6 +125,12 @@ run = function(){
 			$score_selection.toggleClass("hidden");
 		});
 
+		$('#highScores_button').on('click', function(){
+			$.get('/highScores', function(data){
+				$('#highScores_table').html(data);
+			});
+		});
+
 
 
 		/** Changes the images on the dice to match the current values */
@@ -194,6 +200,17 @@ run = function(){
 				.removeClass("scored");
 		}
 	});
-}
+}();
 
-addLoadEvent(run);
+/**
+ * Gets input for player name and returns a string containing it
+ * @returns {String} player name
+ */
+function getPlayerName(){
+	console.log("Inside get player name----------------------------------");
+	var playerName = prompt('Name: ');
+	return playerName;
+	// if(playerName!=null){
+	// 	return playerName;
+	// }
+}
